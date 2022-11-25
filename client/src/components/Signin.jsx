@@ -25,7 +25,7 @@ const Signin = ({form, handlerChange, errorMessage, setErrorMessage}) => {
 
     const handlerLogin = async () => {
         try {
-            await axios.post('/api/auth/signin', {...form}, {
+            await axios.post('api/auth/signin', {...form}, {
                 headers: {
                     'Content-Type': 'application/json',
                 }

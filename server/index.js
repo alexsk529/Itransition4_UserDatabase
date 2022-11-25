@@ -2,19 +2,16 @@ import express from 'express';
 import mongoose from 'mongoose'
 import routerAuth from './routes/auth.route.js';
 import routerMain from './routes/main.route.js';
+import dotenv from 'dotenv';
 import cors from 'cors';
 
+dotenv.config()
 const app = express();
-const PORT = 5000
+const PORT = process.env.PORT || 5000;
 const mongoPath = 'mongodb+srv://admin:admin@cluster0.s2pg5n5.mongodb.net/task4?retryWrites=true&w=majority';
-const corsOptions = {
-    origin: "http://localhost:3000",
-    credentials: true,
-    optionsSuccessStatus: 200,
-    methods: ['GET', 'PUT', 'POST', 'DELETE', 'PATCH']
-}
 
-app.use(cors(corsOptions));
+
+app.use(cors());
 app.use(express.json({extended: true}))
 app.use('/api/auth', routerAuth)
 app.use('/api/main', routerMain)

@@ -15,7 +15,7 @@ const Toolbar = ({selected, setData, data})=> {
         try {
             selected.map( async (id) => {
                 await axios
-                    .delete(`/api/main/delete/:${id}`)
+                    .delete(`api/main/delete/:${id}`)
                     .then(res => {
                         const data = JSON.parse(localStorage.getItem('userData'))
                         if (id === data.userId) logout();
@@ -34,7 +34,7 @@ const Toolbar = ({selected, setData, data})=> {
         try {
             selected.map( async (id) => {
                 await axios
-                    .patch(`/api/main/block/:${id}`)
+                    .patch(`api/main/block/:${id}`)
                     .then(res => {
                         const data = JSON.parse(localStorage.getItem('userData'))
                         if (id === data.userId) logout()
@@ -52,7 +52,7 @@ const Toolbar = ({selected, setData, data})=> {
         try {
             selected.map( async (id) => {
                 await axios
-                    .patch(`/api/main/unblock/:${id}`)
+                    .patch(`api/main/unblock/:${id}`)
                     .then(res => {
                         console.log('unblocked: ', res.data)
                         setData(res.data)
