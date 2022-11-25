@@ -11,7 +11,7 @@ class UserController {
             if (!errors.isEmpty()) {
                 return res.status(400).json({
                     errors: errors.array(),
-                    message: 'Incorrect signin data'
+                    message: 'Invalid data'
                 })
             }
 
@@ -19,8 +19,9 @@ class UserController {
 
             const user = await User.findOne({email});
             if (!user) return res.status(400).json({message: 'Incorrect email'})
+            if (user.status === 'Blocked') return res.status(403).json({message: 'This user has been blocked'})
 
-            const isAuth = bcrypter.compare(password, user.password)
+            const isAuth = await bcrypter.compare(password, user.password)
             if(!isAuth) return res.status(400).json({message: 'Incorrect password'})
 
             const jwtSecret = 'sec456ret';
@@ -30,7 +31,7 @@ class UserController {
                 {expiresIn:'1h'}
             );
 
-            user.loginDate = `${new Date().getDate()}/${new Date().getMonth()+1}/${new Date().getFullYear()} ${new Date().getHours()}:${new Date().getMinutes()}`;
+            user.loginDate = `${new Date().toLocaleString()}`
             user.save();
 
             res.json({token, userId: user._id});
@@ -47,7 +48,7 @@ class UserController {
             if (!errors.isEmpty()) {
                 return res.status(400).json({
                     errors: errors.array(),
-                    message: 'Incorrect signup data'
+                    message: 'Incorrect data'
                 })
             }
 
@@ -61,12 +62,12 @@ class UserController {
             const passwordHashed = await bcrypter.hash(password, 12);
 
             const user = new User({
-                email, password: passwordHashed, fullName:`${firstName} ${lastName}`
+                email, password: passwordHashed, fullName:`${firstName[0].toUpperCase() + firstName.slice(1).toLowerCase()} ${lastName[0].toUpperCase() + lastName.slice(1).toLowerCase()}`
             })
 
             await user.save();
 
-            res.status(201).json({message: 'The user has been created'});
+            res.status(201).json({message: 'You have successfully signed up'});
 
         } catch (e) {
             console.log(e)
@@ -75,18 +76,28 @@ class UserController {
 
     async getData (req, res) {
         try {
-            User.find({}, (err, data) =>{
-                if (err) res.send(err);
-                res.send(data);
-            })
+            await User.find({})
+                .then(data => res.send(data))
         } catch (e) {console.log(e)}
     }
 
     async deleteSelected (req, res) {
         const id = req.params.id.slice(1);
-        const user = await User.findByIdAndDelete({_id: id});
+        await User.findByIdAndDelete({_id: id});
 
-        res.send(user);
+        await User.find({})
+            .then(data => res.send(data))
+    }
+
+    async blockUnblock (req,res) {
+        const path = req.url.split('/')[1];
+        const id = req.params.id.slice(1);
+        const user = await User.findById({_id: id}, )
+        user.status = path === 'block' ? 'Blocked' : 'Unrestricted'
+        await user.save()
+
+        await User.find({})
+            .then(data => res.send(data))
     }
 
 }
