@@ -13,7 +13,7 @@
 Бэкенд часть приложения выполнена на NodeJS с использованием фреймворка ExpressJS.
 В качестве СУБД выбрана MongoDB.
 
-## Развертывание проекта
+## Развертывание проекта локально
 ```
     git clone https://github.com/alexsk529/Itransition4_UserDatabase.git
 ```
