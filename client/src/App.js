@@ -1,4 +1,4 @@
-import './App.scss';
+import './App.css';
 import {useRoutes} from './routes.js';
 import {useAuth} from "./hooks/auth.hook.js";
 import {AuthContext} from "./context/AuthContext.js";

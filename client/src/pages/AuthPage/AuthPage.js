@@ -5,7 +5,7 @@ import MainPage from "../MainPage/MainPage";
 import { ButtonGroup, Button, Container } from '@mui/material';
 import Signin from '../../components/Signin.js'
 import Signup from '../../components/Signup.js'
-import './AuthPage.scss'
+import './AuthPage.css'
 
 const AuthPage = () => {
     const [form, setForm] = React.useState({

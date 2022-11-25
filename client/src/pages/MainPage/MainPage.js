@@ -6,7 +6,7 @@ import Toolbar from '../../components/Toolbar.js'
 import {AuthContext} from "../../context/AuthContext.js";
 import axios from '../../axios.js';
 
-import './MainPage.scss'
+import './MainPage.css'
 
 const MainPage = () => {
     const {logout} = React.useContext(AuthContext)
