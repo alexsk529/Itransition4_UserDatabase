@@ -4,6 +4,7 @@
   "description": "Itransition - 4app",
   "main": "index.js",
   "scripts": {
+    "install-deps": "npm install && cd client && npm install && cd ../",
     "server": "nodemon index.js --ignore client",
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""

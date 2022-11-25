@@ -17,7 +17,7 @@
 ```
     git clone https://github.com/alexsk529/Itransition4_UserDatabase.git
 ```
-``` npm install ``` - installing dependencies <br/>
+``` npm run install-deps ``` - installing all dependencies (both frontend and backend) <br/>
 ``` npm run server ``` - run backend side <br/>
 ``` npm run client ``` - run frontend side <br/>
 ``` npm run dev ``` - run both backend and frontend sides
