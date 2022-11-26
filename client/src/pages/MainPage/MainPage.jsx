@@ -29,10 +29,10 @@ const MainPage = () => {
     let columns = [
         { field: "id", headerName: "ID", width: 220},
         { field: "fullName", headerName: "Full Name", width: 150},
-        { field: "email", headerName: "e-mail", width: 190},
+        { field: "email", headerName: "e-mail", width: 200},
         { field: "status", headerName: "Status", width: 100, headerAlign: 'center',  align:'center' },
-        { field: "createdAt", headerName: "Date of Registration", width: 165, headerAlign: 'center', align:'center' },
-        { field: "loginDate", headerName: "Date of Recent Login", width: 165, headerAlign: 'center', align:'center' }
+        { field: "createdAt", headerName: "Date of Registration", width: 200, headerAlign: 'center', align:'center' },
+        { field: "loginDate", headerName: "Date of Recent Login", width: 200, headerAlign: 'center', align:'center' }
     ];
     let rows = data.map((row) => ({
         id: row._id,
