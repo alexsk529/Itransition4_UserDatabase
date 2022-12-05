@@ -8,6 +8,7 @@ import axios from "../axios.js";
 const Signin = ({form, handlerChange, errorMessage, setErrorMessage}) => {
 
     const [status, setStatus] = React.useState('');
+    const [isPending, setIsPending] = React.useState(false)
     const {login} = React.useContext(AuthContext)
 
     const Error = ()=>{
@@ -25,7 +26,8 @@ const Signin = ({form, handlerChange, errorMessage, setErrorMessage}) => {
 
     const handlerLogin = async () => {
         try {
-            await axios.post('/api/auth/signin', {...form}, {
+            setIsPending(true)
+            await axios.post('api/auth/signin', {...form}, {
                 headers: {
                     'Content-Type': 'application/json',
                 }
@@ -83,7 +85,7 @@ const Signin = ({form, handlerChange, errorMessage, setErrorMessage}) => {
                             sx={{ mt: 3, mb: 2 }}
                             onClick={handlerLogin}
                         >
-                            Sign In
+                            {isPending ? 'Loading...' : 'Sign In'}
                         </Button>
                     </Box>
                     <Error/>

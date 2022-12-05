@@ -3,8 +3,8 @@ import {Routes, Route, Link} from 'react-router-dom';
 
 import MainPage from "../MainPage/MainPage";
 import { ButtonGroup, Button, Container } from '@mui/material';
-import Signin from '../../components/Signin.js'
-import Signup from '../../components/Signup.js'
+import Signin from '../../components/Signin.jsx'
+import Signup from '../../components/Signup.jsx'
 import './AuthPage.css'
 
 const AuthPage = () => {

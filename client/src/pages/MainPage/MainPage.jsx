@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {Button, Box, Container} from '@mui/material';
 import {DataGrid} from '@mui/x-data-grid';
-import Toolbar from '../../components/Toolbar.js'
+import Toolbar from '../../components/Toolbar.jsx'
 
 import {AuthContext} from "../../context/AuthContext.js";
 import axios from '../../axios.js';
@@ -16,7 +16,7 @@ const MainPage = () => {
     useEffect(() => {
         async function getData () {
             await axios
-                .get('/api/main/data')
+                .get('api/main/data')
                 .then(res => {
                     setData(res.data)
                 });
@@ -27,12 +27,12 @@ const MainPage = () => {
 
     })
     let columns = [
-        { field: "id", headerName: "ID", width: 210},
+        { field: "id", headerName: "ID", width: 220},
         { field: "fullName", headerName: "Full Name", width: 150},
-        { field: "email", headerName: "e-mail", width: 180},
-        { field: "status", headerName: "Status", width: 90, headerAlign: 'center',  align:'center' },
-        { field: "createdAt", headerName: "Date of Registration", width: 150, headerAlign: 'center', align:'center' },
-        { field: "loginDate", headerName: "Date of Recent Login", width: 150, headerAlign: 'center', align:'center' }
+        { field: "email", headerName: "e-mail", width: 200},
+        { field: "status", headerName: "Status", width: 100, headerAlign: 'center',  align:'center' },
+        { field: "createdAt", headerName: "Date of Registration", width: 200, headerAlign: 'center', align:'center' },
+        { field: "loginDate", headerName: "Date of Recent Login", width: 200, headerAlign: 'center', align:'center' }
     ];
     let rows = data.map((row) => ({
         id: row._id,

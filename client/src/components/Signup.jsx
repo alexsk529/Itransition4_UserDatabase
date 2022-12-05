@@ -7,10 +7,12 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const Signup = ({form, handlerChange, errorMessage, setErrorMessage}) => {
     const [status, setStatus] = React.useState('');
+    const [isPending, setIsPending] = React.useState(false)
 
     const handlerSignup = async () => {
         try {
-            await axios.post('/api/auth/signup', {...form}, {
+            setIsPending(true)
+            await axios.post('api/auth/signup', {...form}, {
                 headers: {
                     'Content-Type': 'application/json',
                 }
@@ -18,6 +20,7 @@ const Signup = ({form, handlerChange, errorMessage, setErrorMessage}) => {
                 .then(res => {
                     setErrorMessage(res.data.message)
                     setStatus(res.status)
+                    setIsPending(false)
                 })
         } catch (e) {
             console.log(e)
@@ -120,7 +123,7 @@ const Signup = ({form, handlerChange, errorMessage, setErrorMessage}) => {
                             sx={{ mt: 3, mb: 2 }}
                             onClick={handlerSignup}
                         >
-                            Sign Up
+                            {isPending ? 'Loading...' : 'Sign Up'}
                         </Button>
                     </Box>
                 </Box>
