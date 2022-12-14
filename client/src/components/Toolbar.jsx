@@ -15,7 +15,7 @@ const Toolbar = ({selected, setData, data})=> {
         try {
             selected.map( async (id) => {
                 await axios
-                    .delete(`api/nmain/delete/:${id}`)
+                    .delete(`api/main/delete/:${id}`)
                     .then(res => {
                         const data = JSON.parse(localStorage.getItem('userData'))
                         if (id === data.userId) logout();
