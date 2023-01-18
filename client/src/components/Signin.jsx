@@ -1,4 +1,5 @@
 import React from "react";
+import Error from './Error.jsx';
 import {AuthContext} from "../context/AuthContext.js";
 import {Button,CssBaseline, TextField, Box, Container } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -9,20 +10,16 @@ const Signin = ({form, handlerChange, errorMessage, setErrorMessage}) => {
 
     const [status, setStatus] = React.useState('');
     const [isPending, setIsPending] = React.useState(false)
+    const [showMessage, setShowMessage] = React.useState(true)
     const {login} = React.useContext(AuthContext)
 
-    const Error = ()=>{
-        if (!status) return null
-        if (status && status !== 200) return <Box component="div"
-                                                  sx={{
-                                                      border:1,
-                                                      borderColor: 'error.main',
-                                                      color:'white',bgcolor:'error.main',
-                                                      width:'50%',
-                                                      pt:1, pb:1,
-                                                      borderRadius: 1
-                                                  }}>{errorMessage}</Box>
-    }
+    React.useEffect(()=> {
+        let timer;
+        if (status && status!==200) {
+            timer = setTimeout(()=>setShowMessage(false), 2500)
+        }
+        return (()=> clearTimeout(timer))
+    }, [status])
 
     const handlerLogin = async () => {
         try {
@@ -40,6 +37,7 @@ const Signin = ({form, handlerChange, errorMessage, setErrorMessage}) => {
             console.log(e)
             setStatus(e.response.status);
             setErrorMessage(e.response.data.message)
+            setIsPending(false)
         }
     }
     const theme = createTheme();
@@ -88,7 +86,7 @@ const Signin = ({form, handlerChange, errorMessage, setErrorMessage}) => {
                             {isPending ? 'Loading...' : 'Sign In'}
                         </Button>
                     </Box>
-                    <Error/>
+                    <Error errorMessage={errorMessage} status={status} showMessage={showMessage}/>
                 </Box>
             </Container>
         </ThemeProvider>

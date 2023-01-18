@@ -1,4 +1,5 @@
 import React from "react";
+import Result from './Result.jsx';
 import {Box, Button, CssBaseline, TextField, Container, Grid} from '@mui/material';
 import axios from "../axios";
 
@@ -8,6 +9,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const Signup = ({form, handlerChange, errorMessage, setErrorMessage}) => {
     const [status, setStatus] = React.useState('');
     const [isPending, setIsPending] = React.useState(false)
+    const [showMessage, setShowMessage] = React.useState(true)
 
     const handlerSignup = async () => {
         try {
@@ -26,32 +28,17 @@ const Signup = ({form, handlerChange, errorMessage, setErrorMessage}) => {
             console.log(e)
             setStatus(e.response.status);
             setErrorMessage(e.response.data.message);
+            setIsPending(false)
         }
     }
-    function Result (){
-        if (!status) return null
-        return (status === 201 ?
-            <Box component="div"
-                 sx={{
-                     border:1,
-                     borderColor: 'success.light',
-                     color:'white',
-                     bgcolor:'success.light',
-                     width:'100%',
-                     pt:1, pb:1,
-                     borderRadius: 1
-                 }}>{errorMessage}</Box> :
-            <Box component="div"
-                 sx={{
-                     border:1,
-                     borderColor: 'error.main',
-                     color:'white',
-                     bgcolor:'error.main',
-                     width:'100%',
-                     pt:1, pb:1,
-                     borderRadius: 1
-                 }}>{errorMessage}</Box>)
-    }
+    React.useEffect(()=> {
+        let timer;
+        if (status) {
+            timer = setTimeout(()=>setShowMessage(false), 2500)
+        }
+        return (()=> clearTimeout(timer))
+    }, [status])
+    
     const theme = createTheme();
 
     return (
@@ -127,7 +114,11 @@ const Signup = ({form, handlerChange, errorMessage, setErrorMessage}) => {
                         </Button>
                     </Box>
                 </Box>
-                <Result />
+                {
+                    status ?
+                    <Result status={status} showMessage={showMessage} errorMessage={errorMessage}/> :
+                    null
+                }
             </Container>
         </ThemeProvider>
     );
